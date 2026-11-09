@@ -4,7 +4,7 @@
 
 網站以提供「全港 $40 或以下」餐廳探索為核心，前端採 Vite + TypeScript 建立單頁體驗；餐廳資料由使用者提供的試算表正規化為 `src/data/restaurants.json`，只匯入 `status=approved` 的內容。資料層包含 `lat`／`lng` 與可選的 `latOverride`／`lngOverride` 欄位；前端以 override 優先，讓人工核對過的街道座標永遠覆蓋自動解析或 fallback。
 
-首頁由 Header、橫向篩選帶、可縮放／拖曳的 Leaflet 地圖與下方餐廳抽屜組成。底圖使用以 OpenStreetMap 資料為基礎的 CARTO 免費圖磚，Pin 由 Leaflet MarkerCluster 聚合；點擊單一 Pin 會開啟對應餐廳詳情，點擊聚合點會自動放大拆分。詳情頁以 modal sheet 呈現，底部固定 Google Maps、報料、寫食評三個單手操作按鈕。報料與食評在前端示範完整流程，圖片以 Canvas 壓縮後顯示檔案大小，提交資料以 `pending` 狀態處理，不會直接渲染上線。
+首頁由 Header、橫向篩選帶、可縮放／拖曳的 Leaflet 地圖與下方餐廳抽屜組成。底圖使用 OpenStreetMap.de 免費圖磚，Pin 由 Leaflet MarkerCluster 聚合；同地址或近距離餐廳顯示帶數字的聚合氣泡，點擊會自動放大，最高縮放仍保持聚合並以 Spiderfy 螺旋散開，避免 Pin 疊住而無法點擊。點擊單一 Pin 會開啟對應餐廳詳情。詳情頁以 modal sheet 呈現，底部固定 Google Maps、報料、寫食評三個單手操作按鈕。報料與食評在前端示範完整流程，圖片以 Canvas 壓縮後顯示檔案大小，提交資料以 `pending` 狀態處理，不會直接渲染上線。
 
 ## 設計方向
 

@@ -5,6 +5,7 @@
 - [x] **篩選器**：提供免刷新、可橫向滑動的分類、價格、地區篩選器，並支援組合篩選。
 - [x] **真實互動地圖、Pin 與聚合**：使用 Leaflet.js 搭配以 OpenStreetMap 資料為基礎的免費圖磚，支援縮放與拖曳平移；餐廳資料含 `lat`／`lng`，按地址地理編碼結果或地區 fallback 顯示 Pin；使用 MarkerCluster 處理密集標記，點擊 Pin 連動餐廳詳情，點擊聚合點自動放大拆分。
 - [x] **地址解析與人工座標覆蓋**：餐廳資料可直接填寫數字型 `latOverride`／`lngOverride`；前端在建立 Leaflet Marker 前優先使用兩個 override 欄位，任一欄缺失才回退至 `lat`／`lng`。已為首批屯門街道地址加入人工核對座標，並附上 `LOCATION_OVERRIDES.md` 維護說明。
+- [x] **同地址餐廳聚合與展開**：Leaflet MarkerCluster 保持啟用至最高縮放，使用數字聚合氣泡、點擊聚合點自動放大，並在最高縮放以 Spiderfy 螺旋展開同地址 Pin；移除會令同址餐廳重新重疊的 `disableClusteringAtZoom` 設定。
 - [x] **詳情與單手操作列**：點擊 Pin 或卡片進入餐廳詳細頁，底部固定 Google Maps、報料、寫食評按鈕。
 - [x] **報料防呆**：報料表單支援圖片選取及 Canvas 壓縮預覽，日期格式統一為 DD/MM/YYYY；新報料以 pending 狀態提交，並有防止空白提交的提示。
 - [x] **審核狀態與免責聲明**：餐廳、報料與食評資料具備 status；前台只渲染 approved 內容；Footer 顯示報料免責聲明。

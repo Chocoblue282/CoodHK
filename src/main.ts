@@ -135,8 +135,10 @@ function initInteractiveMap(restaurants: Restaurant[]) {
   const clusterGroup = L.markerClusterGroup({
     showCoverageOnHover: false,
     spiderfyOnMaxZoom: true,
-    disableClusteringAtZoom: 15,
     maxClusterRadius: 48,
+    zoomToBoundsOnClick: true,
+    spiderfyDistanceMultiplier: 1.35,
+    removeOutsideVisibleBounds: true,
     chunkedLoading: true,
     iconCreateFunction: (cluster) => L.divIcon({
       html: `<span class="cluster-count">${cluster.getChildCount()}</span>`,
