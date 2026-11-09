@@ -2,7 +2,7 @@
 
 ## 產品與實作
 
-網站以提供「全港 $40 或以下」餐廳探索為核心，前端採 Vite + TypeScript 建立單頁體驗；餐廳資料由使用者提供的試算表正規化為 `src/data/restaurants.json`，只匯入 `status=approved` 的內容。資料層現在包含 `lat`／`lng` 欄位：可用地址地理編碼結果定位，沒有匹配時以香港地區中心作安全 fallback，確保每個資料點都有可檢視的真實地圖位置。
+網站以提供「全港 $40 或以下」餐廳探索為核心，前端採 Vite + TypeScript 建立單頁體驗；餐廳資料由使用者提供的試算表正規化為 `src/data/restaurants.json`，只匯入 `status=approved` 的內容。資料層包含 `lat`／`lng` 與可選的 `latOverride`／`lngOverride` 欄位；前端以 override 優先，讓人工核對過的街道座標永遠覆蓋自動解析或 fallback。
 
 首頁由 Header、橫向篩選帶、可縮放／拖曳的 Leaflet 地圖與下方餐廳抽屜組成。底圖使用以 OpenStreetMap 資料為基礎的 CARTO 免費圖磚，Pin 由 Leaflet MarkerCluster 聚合；點擊單一 Pin 會開啟對應餐廳詳情，點擊聚合點會自動放大拆分。詳情頁以 modal sheet 呈現，底部固定 Google Maps、報料、寫食評三個單手操作按鈕。報料與食評在前端示範完整流程，圖片以 Canvas 壓縮後顯示檔案大小，提交資料以 `pending` 狀態處理，不會直接渲染上線。
 
@@ -25,6 +25,7 @@
 
 - `src/main.ts`：頁面狀態、渲染、篩選、聚合點、詳情與 modal 互動。
 - `src/styles.css`：響應式版面、品牌色彩、地圖舞台及操作列。
-- `src/data/restaurants.json`：由 CSV/XLSX 解析的 approved 餐廳資料，含 status、營業時間與地圖座標。
+- `src/data/restaurants.json`：由 CSV/XLSX 解析的 approved 餐廳資料，含 status、營業時間、lat/lng 與可手動覆蓋的 latOverride/lngOverride。
+- `src/data/LOCATION_OVERRIDES.md`：人工修正座標的維護說明與資料格式。
 - `public/assets/coodhk-logo.png`：使用者提供的品牌 Logo。
 - `public/manus-routes.json`：首頁路由宣告。

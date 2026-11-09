@@ -25,6 +25,8 @@ type Restaurant = {
   lat: number;
   lng: number;
   source: string;
+  latOverride?: number | null;
+  lngOverride?: number | null;
 };
 
 type FilterState = { cuisine: string; price: string; district: string; search: string };
@@ -40,6 +42,11 @@ const state: FilterState = { cuisine: '全部', price: '全部', district: '全�
 let selectedId: string | null = null;
 let detailOpen = false;
 let leafletMap: L.Map | null = null;
+
+function resolveCoordinates(restaurant: Restaurant): [number, number] {
+  const hasOverride = typeof restaurant.latOverride === 'number' && typeof restaurant.lngOverride === 'number';
+  return hasOverride ? [restaurant.latOverride as number, restaurant.lngOverride as number] : [restaurant.lat, restaurant.lng];
+}
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -139,7 +146,8 @@ function initInteractiveMap(restaurants: Restaurant[]) {
   });
   const bounds = L.latLngBounds([]);
   restaurants.forEach((restaurant) => {
-    const marker = L.marker([restaurant.lat, restaurant.lng], {
+    const [lat, lng] = resolveCoordinates(restaurant);
+    const marker = L.marker([lat, lng], {
       icon: L.divIcon({
         html: `<span class="coodhk-marker ${selectedId === restaurant.id ? 'selected' : ''}"></span>`,
         className: 'coodhk-marker-icon',
@@ -151,7 +159,7 @@ function initInteractiveMap(restaurants: Restaurant[]) {
     marker.bindTooltip(`<strong>${escapeHtml(restaurant.name)}</strong><br>${escapeHtml(restaurant.district)} · ${escapeHtml(restaurant.priceLabel)}`, { direction: 'top', offset: [0, -28] });
     marker.on('click', () => openDetail(restaurant.id));
     clusterGroup.addLayer(marker);
-    bounds.extend([restaurant.lat, restaurant.lng]);
+    bounds.extend([lat, lng]);
   });
   map.addLayer(clusterGroup);
   if (bounds.isValid()) map.fitBounds(bounds, { padding: [25, 25], maxZoom: state.district === '全部' ? 12 : 14 });
@@ -197,6 +205,7 @@ function openDetail(id: string) {
   selectedId = id;
   detailOpen = true;
   renderApp();
+  window.setTimeout(() => document.querySelector<HTMLElement>(`[data-card-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }), 0);
   const restaurant = allRestaurants.find((item) => item.id === id);
   if (!restaurant) return;
   const modal = document.querySelector<HTMLDivElement>('#modal-root')!;

@@ -25,9 +25,11 @@
     "status": "approved",
     "mapX": 21.94,
     "mapY": 44.61,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.3743067,
+    "lng": 113.9607311,
+    "source": "manual-override",
+    "latOverride": 22.3743067,
+    "lngOverride": 113.9607311
   },
   {
     "id": "2.0",
@@ -55,9 +57,11 @@
     "status": "approved",
     "mapX": 21.2,
     "mapY": 44.41,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.4084172,
+    "lng": 113.9659776,
+    "source": "manual-override",
+    "latOverride": 22.4084172,
+    "lngOverride": 113.9659776
   },
   {
     "id": "3.0",
@@ -85,9 +89,11 @@
     "status": "approved",
     "mapX": 16.33,
     "mapY": 44.84,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.407422,
+    "lng": 113.9685117,
+    "source": "manual-override",
+    "latOverride": 22.407422,
+    "lngOverride": 113.9685117
   },
   {
     "id": "4.0",
@@ -115,9 +121,11 @@
     "status": "approved",
     "mapX": 13.27,
     "mapY": 37.27,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.4073257,
+    "lng": 113.972571,
+    "source": "manual-override",
+    "latOverride": 22.4073257,
+    "lngOverride": 113.972571
   },
   {
     "id": "5.0",
@@ -145,9 +153,11 @@
     "status": "approved",
     "mapX": 15.0,
     "mapY": 41.0,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.407422,
+    "lng": 113.9685117,
+    "source": "manual-override",
+    "latOverride": 22.407422,
+    "lngOverride": 113.9685117
   },
   {
     "id": "6.0",
@@ -175,9 +185,11 @@
     "status": "approved",
     "mapX": 19.24,
     "mapY": 39.55,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.4034278,
+    "lng": 113.9751468,
+    "source": "manual-override",
+    "latOverride": 22.4034278,
+    "lngOverride": 113.9751468
   },
   {
     "id": "7.0",
@@ -205,9 +217,11 @@
     "status": "approved",
     "mapX": 13.04,
     "mapY": 45.71,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.3743067,
+    "lng": 113.9607311,
+    "source": "manual-override",
+    "latOverride": 22.3743067,
+    "lngOverride": 113.9607311
   },
   {
     "id": "8.0",
@@ -235,9 +249,11 @@
     "status": "approved",
     "mapX": 16.45,
     "mapY": 40.25,
-    "lat": 22.3908,
-    "lng": 113.9726,
-    "source": "district-fallback"
+    "lat": 22.3950942,
+    "lng": 113.9759065,
+    "source": "manual-override",
+    "latOverride": 22.3950942,
+    "lngOverride": 113.9759065
   },
   {
     "id": "9.0",
@@ -269,7 +285,9 @@
     "mapY": 40.73,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "10.0",
@@ -299,7 +317,9 @@
     "mapY": 43.31,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "11.0",
@@ -329,7 +349,9 @@
     "mapY": 43.78,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "12.0",
@@ -359,7 +381,9 @@
     "mapY": 40.45,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "13.0",
@@ -391,7 +415,9 @@
     "mapY": 38.22,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "14.0",
@@ -421,7 +447,9 @@
     "mapY": 42.41,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "15.0",
@@ -451,7 +479,9 @@
     "mapY": 39.31,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "16.0",
@@ -481,7 +511,9 @@
     "mapY": 39.51,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "17.0",
@@ -511,7 +543,9 @@
     "mapY": 37.67,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "18.0",
@@ -541,7 +575,9 @@
     "mapY": 40.65,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "19.0",
@@ -571,7 +607,9 @@
     "mapY": 41.04,
     "lat": 22.3908,
     "lng": 113.9726,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "20.0",
@@ -601,7 +639,9 @@
     "mapY": 27.12,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "21.0",
@@ -631,7 +671,9 @@
     "mapY": 28.92,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "22.0",
@@ -661,7 +703,9 @@
     "mapY": 28.37,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "23.0",
@@ -691,7 +735,9 @@
     "mapY": 26.53,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "24.0",
@@ -721,7 +767,9 @@
     "mapY": 21.16,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "25.0",
@@ -751,7 +799,9 @@
     "mapY": 21.35,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "26.0",
@@ -783,7 +833,9 @@
     "mapY": 23.27,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "27.0",
@@ -813,7 +865,9 @@
     "mapY": 26.33,
     "lat": 22.4445,
     "lng": 114.0222,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "28.0",
@@ -843,7 +897,9 @@
     "mapY": 10.69,
     "lat": 22.4588,
     "lng": 114.0019,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "29.0",
@@ -873,7 +929,9 @@
     "mapY": 52.98,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "30.0",
@@ -905,7 +963,9 @@
     "mapY": 50.31,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "31.0",
@@ -937,7 +997,9 @@
     "mapY": 50.16,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "32.0",
@@ -967,7 +1029,9 @@
     "mapY": 47.51,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "33.0",
@@ -997,7 +1061,9 @@
     "mapY": 53.14,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "34.0",
@@ -1027,7 +1093,9 @@
     "mapY": 46.12,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "35.0",
@@ -1057,7 +1125,9 @@
     "mapY": 52.98,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "36.0",
@@ -1087,7 +1157,9 @@
     "mapY": 51.18,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "37.0",
@@ -1117,7 +1189,9 @@
     "mapY": 50.04,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "38.0",
@@ -1147,7 +1221,9 @@
     "mapY": 44.47,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "39.0",
@@ -1177,7 +1253,9 @@
     "mapY": 53.33,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "40.0",
@@ -1207,7 +1285,9 @@
     "mapY": 52.98,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "41.0",
@@ -1237,7 +1317,9 @@
     "mapY": 47.92,
     "lat": 22.3717,
     "lng": 114.1133,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "42.0",
@@ -1269,7 +1351,9 @@
     "mapY": 45.59,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "43.0",
@@ -1300,7 +1384,9 @@
     "mapY": 43.31,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "44.0",
@@ -1330,7 +1416,9 @@
     "mapY": 57.55,
     "lat": 22.357,
     "lng": 114.1277,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "45.0",
@@ -1360,7 +1448,9 @@
     "mapY": 46.49,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "46.0",
@@ -1390,7 +1480,9 @@
     "mapY": 53.47,
     "lat": 22.357,
     "lng": 114.1277,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "47.0",
@@ -1420,7 +1512,9 @@
     "mapY": 59.67,
     "lat": 22.357,
     "lng": 114.1277,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "48.0",
@@ -1450,7 +1544,9 @@
     "mapY": 59.24,
     "lat": 22.357,
     "lng": 114.1277,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "49.0",
@@ -1480,7 +1576,9 @@
     "mapY": 45.9,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "50.0",
@@ -1510,7 +1608,9 @@
     "mapY": 48.37,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "51.0",
@@ -1540,7 +1640,9 @@
     "mapY": 49.59,
     "lat": 22.3639,
     "lng": 114.1322,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "52.0",
@@ -1570,7 +1672,9 @@
     "mapY": 63.8,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "53.0",
@@ -1601,7 +1705,9 @@
     "mapY": 64.47,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "54.0",
@@ -1631,7 +1737,9 @@
     "mapY": 60.16,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "55.0",
@@ -1661,7 +1769,9 @@
     "mapY": 65.29,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "56.0",
@@ -1691,7 +1801,9 @@
     "mapY": 67.86,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "57.0",
@@ -1721,7 +1833,9 @@
     "mapY": 74.02,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "58.0",
@@ -1751,7 +1865,9 @@
     "mapY": 73.31,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "59.0",
@@ -1781,7 +1897,9 @@
     "mapY": 67.75,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "60.0",
@@ -1811,7 +1929,9 @@
     "mapY": 73.0,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "61.0",
@@ -1841,7 +1961,9 @@
     "mapY": 73.08,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "62.0",
@@ -1871,7 +1993,9 @@
     "mapY": 71.67,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "63.0",
@@ -1901,7 +2025,9 @@
     "mapY": 69.82,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "64.0",
@@ -1931,7 +2057,9 @@
     "mapY": 73.75,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "65.0",
@@ -1962,7 +2090,9 @@
     "mapY": 73.12,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "66.0",
@@ -1993,7 +2123,9 @@
     "mapY": 70.33,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "67.0",
@@ -2023,7 +2155,9 @@
     "mapY": 72.06,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "68.0",
@@ -2054,7 +2188,9 @@
     "mapY": 70.37,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "69.0",
@@ -2084,7 +2220,9 @@
     "mapY": 67.04,
     "lat": 22.3313,
     "lng": 114.1628,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "70.0",
@@ -2116,7 +2254,9 @@
     "mapY": 69.18,
     "lat": 22.3193,
     "lng": 114.1694,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "71.0",
@@ -2147,7 +2287,9 @@
     "mapY": 70.24,
     "lat": 22.3193,
     "lng": 114.1694,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "72.0",
@@ -2177,7 +2319,9 @@
     "mapY": 66.67,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "73.0",
@@ -2207,7 +2351,9 @@
     "mapY": 67.92,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "74.0",
@@ -2238,7 +2384,9 @@
     "mapY": 64.55,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "75.0",
@@ -2269,7 +2417,9 @@
     "mapY": 66.04,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "76.0",
@@ -2300,7 +2450,9 @@
     "mapY": 67.76,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "77.0",
@@ -2330,7 +2482,9 @@
     "mapY": 65.45,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "78.0",
@@ -2360,7 +2514,9 @@
     "mapY": 66.71,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "79.0",
@@ -2390,7 +2546,9 @@
     "mapY": 68.55,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "80.0",
@@ -2420,7 +2578,9 @@
     "mapY": 68.98,
     "lat": 22.32,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "81.0",
@@ -2450,7 +2610,9 @@
     "mapY": 76.92,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "82.0",
@@ -2481,7 +2643,9 @@
     "mapY": 75.16,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "83.0",
@@ -2511,7 +2675,9 @@
     "mapY": 81.12,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "84.0",
@@ -2541,7 +2707,9 @@
     "mapY": 78.96,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "85.0",
@@ -2571,7 +2739,9 @@
     "mapY": 80.45,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "86.0",
@@ -2602,7 +2772,9 @@
     "mapY": 78.57,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "87.0",
@@ -2632,7 +2804,9 @@
     "mapY": 81.71,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "88.0",
@@ -2662,7 +2836,9 @@
     "mapY": 75.51,
     "lat": 22.312,
     "lng": 114.2258,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "89.0",
@@ -2692,7 +2868,9 @@
     "mapY": 60.98,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "90.0",
@@ -2722,7 +2900,9 @@
     "mapY": 69.37,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "91.0",
@@ -2752,7 +2932,9 @@
     "mapY": 69.29,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "92.0",
@@ -2782,7 +2964,9 @@
     "mapY": 25.92,
     "lat": 22.382,
     "lng": 114.191,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "93.0",
@@ -2812,7 +2996,9 @@
     "mapY": 68.59,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "94.0",
@@ -2842,7 +3028,9 @@
     "mapY": 63.25,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "95.0",
@@ -2872,7 +3060,9 @@
     "mapY": 61.14,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "96.0",
@@ -2902,7 +3092,9 @@
     "mapY": 65.76,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "97.0",
@@ -2932,7 +3124,9 @@
     "mapY": 18.65,
     "lat": 22.45,
     "lng": 114.168,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "98.0",
@@ -2962,7 +3156,9 @@
     "mapY": 67.49,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "99.0",
@@ -2993,7 +3189,9 @@
     "mapY": 76.57,
     "lat": 22.2783,
     "lng": 114.1747,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   },
   {
     "id": "100.0",
@@ -3025,6 +3223,8 @@
     "mapY": 68.63,
     "lat": 22.3,
     "lng": 114.17,
-    "source": "district-fallback"
+    "source": "district-fallback",
+    "latOverride": null,
+    "lngOverride": null
   }
 ]
