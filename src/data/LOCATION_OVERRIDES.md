@@ -11,4 +11,6 @@
 }
 ```
 
-修改 `src/data/restaurants.json` 後重新建置即可生效。`source` 使用 `manual-override`、`geocoded` 或 `district-fallback` 反映目前定位來源，方便後台檢查仍需人工覆蓋的資料。
+修改 `src/data/restaurants.json` 後重新建置即可生效。`source` 使用 `manual-override`、`photon-street` 或 `district-fallback` 反映目前定位來源，方便後台檢查仍需人工覆蓋的資料。
+
+重新匯入 CSV 後，可從專案根目錄執行 `python3 scripts/geocode_restaurants.py`。腳本會按香港街道英文名稱查詢 Photon／OpenStreetMap 街道級座標；若資料已有數字型 override，會保留人工座標並跳過自動覆蓋。
