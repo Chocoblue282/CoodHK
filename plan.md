@@ -1,10 +1,10 @@
-# Coolhk 香港平價美食地圖｜實作計劃
+# CoodHK 香港平價美食地圖｜實作計劃
 
 ## 產品與實作
 
-網站以提供「全港 $40 或以下」餐廳探索為核心，前端採 Vite + TypeScript 建立單頁體驗；餐廳資料由使用者提供的試算表正規化為 `src/data/restaurants.json`，只匯入 `status=approved` 的內容。由於資料沒有經緯度，資料層以地址中的地區建立可重現的地區座標與微小散佈，讓地圖 Pin 與聚合點可互動，Google Maps 按鈕則使用餐廳地址建立外部搜尋連結。
+網站以提供「全港 $40 或以下」餐廳探索為核心，前端採 Vite + TypeScript 建立單頁體驗；餐廳資料由使用者提供的試算表正規化為 `src/data/restaurants.json`，只匯入 `status=approved` 的內容。資料層現在包含 `lat`／`lng` 欄位：可用地址地理編碼結果定位，沒有匹配時以香港地區中心作安全 fallback，確保每個資料點都有可檢視的真實地圖位置。
 
-首頁由 Header、橫向篩選帶、地圖主視覺與下方餐廳抽屜組成。地圖採輕量 SVG／CSS 地圖視覺，按地區聚合餐廳；點擊聚合點會套用地區篩選，點擊單一 Pin 或卡片會打開詳情。詳情頁以 modal sheet 呈現，底部固定 Google Maps、報料、寫食評三個單手操作按鈕。報料與食評在前端示範完整流程，圖片以 Canvas 壓縮後顯示檔案大小，提交資料以 `pending` 狀態處理，不會直接渲染上線。
+首頁由 Header、橫向篩選帶、可縮放／拖曳的 Leaflet 地圖與下方餐廳抽屜組成。底圖使用以 OpenStreetMap 資料為基礎的 CARTO 免費圖磚，Pin 由 Leaflet MarkerCluster 聚合；點擊單一 Pin 會開啟對應餐廳詳情，點擊聚合點會自動放大拆分。詳情頁以 modal sheet 呈現，底部固定 Google Maps、報料、寫食評三個單手操作按鈕。報料與食評在前端示範完整流程，圖片以 Canvas 壓縮後顯示檔案大小，提交資料以 `pending` 狀態處理，不會直接渲染上線。
 
 ## 設計方向
 
@@ -18,7 +18,7 @@
 - **Typography System**：以系統無襯線字體支援繁中，標題使用粗體大字與緊湊行高，內文維持 14–15px；數字與價格使用等寬數字感。
 - **Brand Essence**：給香港人快速搵到抵食好味道的地圖；率直、熱鬧、可靠。
 - **Brand Voice**：標題直接：「今日食邊區？」；CTA 具體：「搵間 $40 內嘅」。
-- **Wordmark & Logo**：沿用使用者提供的 Coolhk 圖釘碗 Logo，Header 以圖標搭配 Coolhk 字樣作識別。
+- **Wordmark & Logo**：沿用使用者提供的 CoodHK 圖釘碗 Logo，Header 以圖標搭配 CoodHK 字樣作識別。
 - **Signature Brand Color**：暖活力橙 #F48C2A。
 
 ## 專案結構
@@ -26,5 +26,5 @@
 - `src/main.ts`：頁面狀態、渲染、篩選、聚合點、詳情與 modal 互動。
 - `src/styles.css`：響應式版面、品牌色彩、地圖舞台及操作列。
 - `src/data/restaurants.json`：由 CSV/XLSX 解析的 approved 餐廳資料，含 status、營業時間與地圖座標。
-- `public/assets/coolhk-logo.png`：使用者提供的品牌 Logo。
+- `public/assets/coodhk-logo.png`：使用者提供的品牌 Logo。
 - `public/manus-routes.json`：首頁路由宣告。

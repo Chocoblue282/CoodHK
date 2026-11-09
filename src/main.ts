@@ -1,5 +1,10 @@
 import './styles.css';
 import restaurantsData from './data/restaurants.json';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 type Restaurant = {
   id: string;
@@ -17,6 +22,9 @@ type Restaurant = {
   status: string;
   mapX: number;
   mapY: number;
+  lat: number;
+  lng: number;
+  source: string;
 };
 
 type FilterState = { cuisine: string; price: string; district: string; search: string };
@@ -31,6 +39,7 @@ const districtPositions: Record<string, [number, number]> = {
 const state: FilterState = { cuisine: '全部', price: '全部', district: '全部', search: '' };
 let selectedId: string | null = null;
 let detailOpen = false;
+let leafletMap: L.Map | null = null;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -98,8 +107,56 @@ function renderMap(restaurants: Restaurant[]) {
   const activeLabel = state.district === '全部' ? '全港探索' : `${state.district} · 已放大`;
   return `<div class="map-panel">
     <div class="map-toolbar"><div class="map-status"><span class="live-dot"></span><strong>${activeLabel}</strong><span>地圖上顯示 ${restaurants.length} 間</span></div><div class="map-legend"><span><i class="legend-cluster"></i>聚合點</span><span><i class="legend-pin"></i>餐廳 Pin</span></div></div>
-    <div class="map-canvas"><div class="map-watermark">COOLHK<br><small>FOOD MAP / 2026</small></div><div class="map-coast"></div><svg class="road-layer" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M-2 67 C20 57 31 62 43 55 S70 36 103 43"/><path d="M20 -5 C30 17 35 31 49 39 S73 65 78 104"/><path d="M0 21 C27 28 44 20 62 24 S83 34 105 30"/><path d="M60 -3 C55 17 64 25 75 31 S88 59 102 68"/><path class="road-secondary" d="M4 91 C29 78 43 76 61 82 S86 91 103 84"/><path class="road-secondary" d="M11 3 C18 25 18 46 8 71"/></svg><div class="district-labels"><span style="left:14%;top:29%">屯門</span><span style="left:27%;top:12%">元朗</span><span style="left:17%;top:5%">天水圍</span><span style="left:46%;top:43%">荃灣</span><span style="left:62%;top:37%">葵涌</span><span style="left:75%;top:64%">九龍</span><span style="left:84%;top:74%">港島</span></div><div class="marker-layer">${groupPins || '<div class="empty-map">未有符合條件的餐廳<br><button data-reset-filters>清除篩選</button></div>'}</div><div class="map-scale"><span></span><small>約 2 km</small></div><div class="map-attribution">Map view · Hong Kong</div></div>
+    <div class="map-canvas"><div class="map-watermark">CoodHK<br><small>FOOD MAP / 2026</small></div><div class="map-coast"></div><svg class="road-layer" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M-2 67 C20 57 31 62 43 55 S70 36 103 43"/><path d="M20 -5 C30 17 35 31 49 39 S73 65 78 104"/><path d="M0 21 C27 28 44 20 62 24 S83 34 105 30"/><path d="M60 -3 C55 17 64 25 75 31 S88 59 102 68"/><path class="road-secondary" d="M4 91 C29 78 43 76 61 82 S86 91 103 84"/><path class="road-secondary" d="M11 3 C18 25 18 46 8 71"/></svg><div class="district-labels"><span style="left:14%;top:29%">屯門</span><span style="left:27%;top:12%">元朗</span><span style="left:17%;top:5%">天水圍</span><span style="left:46%;top:43%">荃灣</span><span style="left:62%;top:37%">葵涌</span><span style="left:75%;top:64%">九龍</span><span style="left:84%;top:74%">港島</span></div><div class="marker-layer">${groupPins || '<div class="empty-map">未有符合條件的餐廳<br><button data-reset-filters>清除篩選</button></div>'}</div><div class="map-scale"><span></span><small>約 2 km</small></div><div class="map-attribution">Map view · Hong Kong</div></div>
   </div>`;
+}
+
+function initInteractiveMap(restaurants: Restaurant[]) {
+  const canvas = document.querySelector<HTMLElement>('.map-canvas');
+  if (!canvas) return;
+  leafletMap?.remove();
+  canvas.innerHTML = '<div id="leaflet-map" aria-label="香港餐廳互動地圖"></div>';
+  const map = L.map('leaflet-map', { zoomControl: false, scrollWheelZoom: true, zoomSnap: 0.5 });
+  leafletMap = map;
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const clusterGroup = L.markerClusterGroup({
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom: true,
+    disableClusteringAtZoom: 15,
+    maxClusterRadius: 48,
+    chunkedLoading: true,
+    iconCreateFunction: (cluster) => L.divIcon({
+      html: `<span class="cluster-count">${cluster.getChildCount()}</span>`,
+      className: 'coodhk-cluster-icon',
+      iconSize: [46, 46]
+    })
+  });
+  const bounds = L.latLngBounds([]);
+  restaurants.forEach((restaurant) => {
+    const marker = L.marker([restaurant.lat, restaurant.lng], {
+      icon: L.divIcon({
+        html: `<span class="coodhk-marker ${selectedId === restaurant.id ? 'selected' : ''}"></span>`,
+        className: 'coodhk-marker-icon',
+        iconSize: [26, 34],
+        iconAnchor: [13, 34]
+      }),
+      title: restaurant.name
+    });
+    marker.bindTooltip(`<strong>${escapeHtml(restaurant.name)}</strong><br>${escapeHtml(restaurant.district)} · ${escapeHtml(restaurant.priceLabel)}`, { direction: 'top', offset: [0, -28] });
+    marker.on('click', () => openDetail(restaurant.id));
+    clusterGroup.addLayer(marker);
+    bounds.extend([restaurant.lat, restaurant.lng]);
+  });
+  map.addLayer(clusterGroup);
+  if (bounds.isValid()) map.fitBounds(bounds, { padding: [25, 25], maxZoom: state.district === '全部' ? 12 : 14 });
+  else map.setView([22.35, 114.12], 11);
+  window.setTimeout(() => map.invalidateSize(), 120);
 }
 
 function restaurantCard(restaurant: Restaurant) {
@@ -118,13 +175,14 @@ function renderDrawer(restaurants: Restaurant[]) {
 }
 
 function renderFooter() {
-  return `<footer class="site-footer"><div class="footer-brand"><img src="/assets/coolhk-logo.png" alt="Coolhk" /><div><strong>Coolhk</strong><span>香港平價美食地圖</span></div></div><div class="footer-note"><strong>報料免責聲明</strong><span>餐廳資料由市民提供，Coolhk 會盡力核實但不保證資料永遠準確或完整；實際營業時間及價格請以餐廳最新公告為準。</span></div><span class="footer-copy">© 2026 Coolhk Map</span></footer>`;
+  return `<footer class="site-footer"><div class="footer-brand"><img src="/assets/coodhk-logo.png" alt="CoodHK" /><div><strong>CoodHK</strong><span>香港平價美食地圖</span></div></div><div class="footer-note"><strong>報料免責聲明</strong><span>餐廳資料由市民提供，CoodHK 會盡力核實但不保證資料永遠準確或完整；實際營業時間及價格請以餐廳最新公告為準。</span></div><span class="footer-copy">© 2026 CoodHK Map</span></footer>`;
 }
 
 function renderApp() {
   const results = filteredRestaurants();
-  app.innerHTML = `<div class="site-shell"><header class="site-header"><a class="brand" href="#top" aria-label="Coolhk 香港平價美食地圖"><img src="/assets/coolhk-logo.png" alt="Coolhk Logo" /><span class="brand-copy"><b>Coolhk</b><small>香港平價美食地圖</small></span></a><nav class="main-nav"><a href="#explore">探索地圖</a><a href="#how-it-works">點樣用</a></nav><div class="header-actions"><span class="header-stat"><b>${allRestaurants.length}</b>間抵食店</span><button class="header-submit" data-open-submit>＋ 報料</button></div></header><main id="top"><section class="hero"><div class="hero-copy"><span class="eyebrow orange">香港人嘅抵食雷達</span><h1>搵到啱你嘅<br><em>平價好味道。</em></h1><p>由屯門到港島，篩選全港 $40 或以下餐廳，<br class="desktop-only">一眼睇晒地圖，單手就可以出發。</p><div class="hero-actions"><button class="primary-button" data-scroll-explore>開始搵食 <span>↓</span></button><span class="hero-proof"><i></i> ${allRestaurants.length} 間已核准餐廳</span></div></div><div class="hero-graphic"><div class="hero-stamp">低於<br><b>$40</b></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><img src="/assets/coolhk-logo.png" alt="Coolhk map pin and bowl" /><span class="hero-coordinate">22.3193° N<br>114.1694° E</span></div></section><section id="explore" class="explore-section"><div class="section-kicker"><span>01 / 探索</span><span>按地區搵好食</span></div>${renderFilters()}<div class="explore-stage">${renderMap(results)}${renderDrawer(results)}</div></section><section id="how-it-works" class="how-section"><div class="how-intro"><span class="eyebrow orange">02 / 點樣用</span><h2>由地圖，<br><em>搵到你嘅下一餐。</em></h2><p>唔使登入，唔使刷新。篩選你想食嘅菜式，再按一個 Pin，就有地址、營業時間同出發路線。</p></div><div class="how-steps"><div><b>01</b><strong>揀地區</strong><span>橫向滑動篩選器，揀你附近嘅區。</span></div><div><b>02</b><strong>睇聚合點</strong><span>密集餐廳自動聚合，地圖保持清爽。</span></div><div><b>03</b><strong>一鍵出發</strong><span>打開詳情，用 Google Maps 直接導航。</span></div></div></section>${renderFooter()}</main><div id="modal-root"></div><div id="toast" class="toast" role="status"></div></div>`;
+  app.innerHTML = `<div class="site-shell"><header class="site-header"><a class="brand" href="#top" aria-label="CoodHK 香港平價美食地圖"><img src="/assets/coodhk-logo.png" alt="CoodHK Logo" /><span class="brand-copy"><b>CoodHK</b><small>香港平價美食地圖</small></span></a><nav class="main-nav"><a href="#explore">探索地圖</a><a href="#how-it-works">點樣用</a></nav><div class="header-actions"><span class="header-stat"><b>${allRestaurants.length}</b>間抵食店</span><button class="header-submit" data-open-submit>＋ 報料</button></div></header><main id="top"><section class="hero"><div class="hero-copy"><span class="eyebrow orange">香港人嘅抵食雷達</span><h1>搵到啱你嘅<br><em>平價好味道。</em></h1><p>由屯門到港島，篩選全港 $40 或以下餐廳，<br class="desktop-only">一眼睇晒地圖，單手就可以出發。</p><div class="hero-actions"><button class="primary-button" data-scroll-explore>開始搵食 <span>↓</span></button><span class="hero-proof"><i></i> ${allRestaurants.length} 間已核准餐廳</span></div></div><div class="hero-graphic"><div class="hero-stamp">低於<br><b>$40</b></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><img src="/assets/coodhk-logo.png" alt="CoodHK map pin and bowl" /><span class="hero-coordinate">22.3193° N<br>114.1694° E</span></div></section><section id="explore" class="explore-section"><div class="section-kicker"><span>01 / 探索</span><span>按地區搵好食</span></div>${renderFilters()}<div class="explore-stage">${renderMap(results)}${renderDrawer(results)}</div></section><section id="how-it-works" class="how-section"><div class="how-intro"><span class="eyebrow orange">02 / 點樣用</span><h2>由地圖，<br><em>搵到你嘅下一餐。</em></h2><p>唔使登入，唔使刷新。篩選你想食嘅菜式，再按一個 Pin，就有地址、營業時間同出發路線。</p></div><div class="how-steps"><div><b>01</b><strong>揀地區</strong><span>橫向滑動篩選器，揀你附近嘅區。</span></div><div><b>02</b><strong>睇聚合點</strong><span>密集餐廳自動聚合，地圖保持清爽。</span></div><div><b>03</b><strong>一鍵出發</strong><span>打開詳情，用 Google Maps 直接導航。</span></div></div></section>${renderFooter()}</main><div id="modal-root"></div><div id="toast" class="toast" role="status"></div></div>`;
   bindEvents();
+  initInteractiveMap(results);
 }
 
 function showToast(message: string) {
