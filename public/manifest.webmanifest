@@ -1,0 +1,18 @@
+{
+  "name": "CoodHK 香港平價美食地圖",
+  "short_name": "CoodHK",
+  "description": "香港平價美食地圖：搵到全港 $40 或以下的平價餐廳。",
+  "lang": "zh-Hant-HK",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F4EF",
+  "theme_color": "#3678BD",
+  "icons": [
+    {
+      "src": "/assets/coodhk-logo.png",
+      "sizes": "1772x1772",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

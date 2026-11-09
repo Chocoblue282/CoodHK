@@ -234,7 +234,7 @@ function openSubmit() {
     const form = event.currentTarget as HTMLFormElement;
     if (!form.checkValidity()) { form.reportValidity(); return; }
     const values = Object.fromEntries(new FormData(form).entries());
-    savePendingRecord('coolhk_pending_submissions', { ...values, status: 'pending', submission_date: todayDisplay(), image_status: document.querySelector('#compression-note')?.textContent ?? '' });
+    savePendingRecord('coodhk_pending_submissions', { ...values, status: 'pending', submission_date: todayDisplay(), image_status: document.querySelector('#compression-note')?.textContent ?? '' });
     closeModal();
     showToast(`報料已收妥（${todayDisplay()}），核准後會公開顯示。`);
   });
@@ -258,7 +258,7 @@ function openReview(id: string) {
     const rating = Number(new FormData(form).get('rating'));
     if (!form.checkValidity() || !rating) { if (!rating) showToast('請先揀評分'); form.reportValidity(); return; }
     const values = Object.fromEntries(new FormData(form).entries());
-    savePendingRecord('coolhk_pending_reviews', { ...values, restaurant_id: restaurant.id, status: 'pending', submission_date: todayDisplay() });
+    savePendingRecord('coodhk_pending_reviews', { ...values, restaurant_id: restaurant.id, status: 'pending', submission_date: todayDisplay() });
     closeModal();
     showToast(`食評已送出，核准後會顯示喺 ${restaurant.name} 詳情。`);
   });
