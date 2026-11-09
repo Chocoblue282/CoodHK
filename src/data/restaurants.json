@@ -637,11 +637,11 @@
     "status": "approved",
     "mapX": 31.59,
     "mapY": 27.12,
-    "lat": 22.4451551,
-    "lng": 114.0115382,
-    "source": "photon-street",
-    "latOverride": null,
-    "lngOverride": null
+    "lat": 22.4428704,
+    "lng": 114.0265253,
+    "source": "manual-override",
+    "latOverride": 22.4428704,
+    "lngOverride": 114.0265253
   },
   {
     "id": "21.0",
@@ -1703,11 +1703,11 @@
     "status": "approved",
     "mapX": 68.51,
     "mapY": 64.47,
-    "lat": 22.494889,
-    "lng": 114.1429604,
-    "source": "photon-street",
-    "latOverride": null,
-    "lngOverride": null
+    "lat": 22.3351213,
+    "lng": 114.1542675,
+    "source": "manual-override",
+    "latOverride": 22.3351213,
+    "lngOverride": 114.1542675
   },
   {
     "id": "54.0",
@@ -3187,11 +3187,11 @@
     "status": "approved",
     "mapX": 83.12,
     "mapY": 76.57,
-    "lat": 22.2684693,
-    "lng": 114.1871589,
-    "source": "photon-street",
-    "latOverride": null,
-    "lngOverride": null
+    "lat": 22.2763895,
+    "lng": 114.1746129,
+    "source": "manual-override",
+    "latOverride": 22.2763895,
+    "lngOverride": 114.1746129
   },
   {
     "id": "100.0",
