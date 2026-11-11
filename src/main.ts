@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { GAS_ENABLED, GAS_ENDPOINT } from './config';
 
 type Restaurant = {
   id: string;
@@ -25,15 +26,16 @@ type Restaurant = {
   lat: number;
   lng: number;
   source: string;
+  photo_url?: string;
   latOverride?: number | null;
   lngOverride?: number | null;
 };
 
 type FilterState = { cuisine: string; price: string; district: string; search: string };
 
-const allRestaurants = (restaurantsData as Restaurant[]).filter((restaurant) => restaurant.status === 'approved');
-const cuisineOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.cuisine))];
-const districtOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.district))];
+let allRestaurants = (restaurantsData as Restaurant[]).filter((restaurant) => restaurant.status === 'approved');
+let cuisineOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.cuisine))];
+let districtOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.district))];
 const districtPositions: Record<string, [number, number]> = {
   天水圍: [20, 14], 屯門: [18, 42], 元朗: [32, 25], 荃灣: [52, 49], 葵涌: [62, 45], 葵芳: [68, 56],
   深水埗: [72, 70], 旺角: [77, 67], 九龍: [77, 76], 觀塘: [91, 80], 沙田: [72, 29], 大埔: [82, 18], 灣仔: [84, 78], 香港: [64, 62]
@@ -42,6 +44,8 @@ const state: FilterState = { cuisine: '全部', price: '全部', district: '全�
 let selectedId: string | null = null;
 let detailOpen = false;
 let leafletMap: L.Map | null = null;
+let pendingPhotoBase64 = '';
+let pendingPhotoName = '';
 
 function resolveCoordinates(restaurant: Restaurant): [number, number] {
   const hasOverride = typeof restaurant.latOverride === 'number' && typeof restaurant.lngOverride === 'number';
@@ -52,6 +56,77 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 
 function escapeHtml(value: string) {
   return value.replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' })[character] ?? character);
+}
+
+function updateFilterOptions() {
+  cuisineOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.cuisine).filter(Boolean))];
+  districtOptions = [...new Set(allRestaurants.map((restaurant) => restaurant.district).filter(Boolean))];
+}
+
+function remoteRestaurant(row: Record<string, unknown>): Restaurant {
+  const local = allRestaurants.find((restaurant) => String(restaurant.id) === String(row.id));
+  const price = Number(row.price ?? local?.price ?? 40) || 40;
+  return {
+    ...(local ?? {} as Restaurant),
+    id: String(row.id ?? crypto.randomUUID()),
+    name: String(row.name ?? local?.name ?? ''),
+    address: String(row.address ?? local?.address ?? ''),
+    district: String(row.district ?? local?.district ?? '香港'),
+    cuisine: String(row.category ?? local?.cuisine ?? '其他'),
+    dining: String(row.dining ?? local?.dining ?? '堂食'),
+    price,
+    priceLabel: price ? `$${price}` : (local?.priceLabel ?? '$40'),
+    hours: String(row.hours ?? local?.hours ?? '以店舖公告為準'),
+    hoursDetail: local?.hoursDetail ?? [],
+    rawOpening: local?.rawOpening ?? {},
+    submissionDate: String(row.created_at ?? local?.submissionDate ?? todayDisplay()),
+    status: String(row.status ?? 'approved'),
+    mapX: Number(row.mapX ?? local?.mapX ?? 64),
+    mapY: Number(row.mapY ?? local?.mapY ?? 62),
+    lat: Number(row.lat ?? local?.lat ?? 22.3193),
+    lng: Number(row.lng ?? local?.lng ?? 114.1694),
+    source: 'google-sheets',
+    latOverride: local?.latOverride ?? null,
+    lngOverride: local?.lngOverride ?? null,
+    photo_url: String(row.photo_url ?? local?.photo_url ?? '') || undefined
+  };
+}
+
+async function syncApprovedRestaurants() {
+  if (!GAS_ENABLED) return;
+  try {
+    const response = await fetch(`${GAS_ENDPOINT}?action=listApproved&t=${Date.now()}`);
+    if (!response.ok) throw new Error(`GAS GET ${response.status}`);
+    const payload = await response.json() as { ok?: boolean; restaurants?: Record<string, unknown>[]; error?: string };
+    if (!payload.ok || !Array.isArray(payload.restaurants)) throw new Error(payload.error || 'GAS returned an invalid response.');
+    allRestaurants = payload.restaurants.filter((row) => String(row.status).toLowerCase() === 'approved').map(remoteRestaurant);
+    updateFilterOptions();
+    renderApp();
+  } catch (error) {
+    console.warn('[CoodHK] Google Sheets sync failed; retaining local approved data.', error);
+    showToast('暫時未能同步試算表，先顯示本地已核准資料。');
+  }
+}
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function submitToGas(payload: Record<string, unknown>) {
+  const response = await fetch(GAS_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) throw new Error(`GAS POST ${response.status}`);
+  const result = await response.json() as { ok?: boolean; error?: string };
+  if (!result.ok) throw new Error(result.error || 'GAS rejected the submission.');
+  return result;
 }
 
 function todayDisplay() {
@@ -171,6 +246,7 @@ function initInteractiveMap(restaurants: Restaurant[]) {
 
 function restaurantCard(restaurant: Restaurant) {
   return `<article class="restaurant-card ${selectedId === restaurant.id ? 'selected' : ''}" data-card-id="${restaurant.id}">
+    ${restaurant.photo_url ? `<img class="card-photo" src="${escapeHtml(restaurant.photo_url)}" alt="${escapeHtml(restaurant.name)} 店舖相片" loading="lazy" />` : ''}
     <div class="card-topline"><span class="card-district">${escapeHtml(restaurant.district)}</span><span class="status-badge"><i></i>已核准</span></div>
     <div class="card-title-row"><h3>${escapeHtml(restaurant.name)}</h3><strong class="price">${escapeHtml(restaurant.priceLabel)}</strong></div>
     <p class="card-address">⌖ ${escapeHtml(restaurant.address)}</p>
@@ -218,6 +294,8 @@ function openDetail(id: string) {
 }
 
 function openSubmit() {
+  pendingPhotoBase64 = '';
+  pendingPhotoName = '';
   const modal = document.querySelector<HTMLDivElement>('#modal-root')!;
   modal.innerHTML = `<div class="modal-backdrop" data-close-modal></div><section class="form-modal" role="dialog" aria-modal="true" aria-label="報料"><button class="modal-close" data-close-modal>×</button><span class="eyebrow orange">社群報料</span><h2>幫手更新一間<br><em>抵食好店。</em></h2><p class="form-lead">你嘅一個報料，幫到下一個搵食嘅人。提交後會由團隊核實，核准後先會上線。</p><form id="submission-form"><label>餐廳名稱<input name="name" required placeholder="例如：家之樂住家餸" /></label><label>地址<input name="address" required placeholder="街道、商場、舖號" /></label><div class="form-two"><label>菜式<input name="cuisine" required placeholder="例如：港式" /></label><label>最低價錢<input name="price" required placeholder="$30" /></label></div><label>營業時間<input name="hours" placeholder="例如：11:00–21:00" /></label><label class="upload-zone"><span class="upload-icon">＋</span><b>上載店舖相片（可選）</b><small>支援 JPG / PNG，會自動壓縮至較細檔案</small><input id="photo-input" type="file" accept="image/jpeg,image/png" /></label><div id="compression-note" class="compression-note"></div><div class="form-foot"><span>提交日期：${todayDisplay()}<br><small>狀態：pending（待核准）</small></span><button class="primary-button" type="submit">送出報料 <span>→</span></button></div></form></section>`;
   document.body.classList.add('modal-open');
@@ -225,18 +303,37 @@ function openSubmit() {
   document.querySelector<HTMLInputElement>('#photo-input')?.addEventListener('change', async (event) => {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
-    const compressed = await compressImage(file);
-    const note = document.querySelector<HTMLDivElement>('#compression-note');
-    if (note) note.innerHTML = `<i>✓</i> 已將圖片由 ${Math.round(file.size / 1024)}KB 壓縮至 ${Math.round(compressed.size / 1024)}KB，可安心提交。`;
+    try {
+      const compressed = await compressImage(file);
+      pendingPhotoBase64 = await blobToDataUrl(compressed);
+      pendingPhotoName = file.name;
+      const note = document.querySelector<HTMLDivElement>('#compression-note');
+      if (note) note.innerHTML = `<i>✓</i> 已將圖片由 ${Math.round(file.size / 1024)}KB 壓縮至 ${Math.round(compressed.size / 1024)}KB，提交時會安全上傳至 Google Drive。`;
+    } catch {
+      pendingPhotoBase64 = '';
+      showToast('圖片處理失敗，請重新選擇 JPG 或 PNG。');
+    }
   });
-  document.querySelector<HTMLFormElement>('#submission-form')?.addEventListener('submit', (event) => {
+  document.querySelector<HTMLFormElement>('#submission-form')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     if (!form.checkValidity()) { form.reportValidity(); return; }
     const values = Object.fromEntries(new FormData(form).entries());
-    savePendingRecord('coodhk_pending_submissions', { ...values, status: 'pending', submission_date: todayDisplay(), image_status: document.querySelector('#compression-note')?.textContent ?? '' });
-    closeModal();
-    showToast(`報料已收妥（${todayDisplay()}），核准後會公開顯示。`);
+    const payload = { id: crypto.randomUUID(), name: values.name, address: values.address, price: values.price, category: values.cuisine, hours: values.hours, photo_base64: pendingPhotoBase64, photo_filename: pendingPhotoName };
+    try {
+      if (GAS_ENABLED) {
+        await submitToGas(payload);
+        closeModal();
+        showToast(`報料已上傳至 Google Drive 並寫入試算表（${todayDisplay()}），待核准後公開。`);
+      } else {
+        savePendingRecord('coodhk_pending_submissions', { ...values, status: 'pending', submission_date: todayDisplay(), image_status: document.querySelector('#compression-note')?.textContent ?? '', photo_pending_upload: Boolean(pendingPhotoBase64) });
+        closeModal();
+        showToast(`報料已暫存（${todayDisplay()}）；接入 GAS 後才會正式上傳圖片。`);
+      }
+    } catch (error) {
+      console.error('[CoodHK] GAS submission failed', error);
+      showToast('報料未能同步，請稍後再試；資料沒有標記為已提交。');
+    }
   });
 }
 
@@ -313,3 +410,4 @@ function bindEvents() {
 }
 
 renderApp();
+void syncApprovedRestaurants();
