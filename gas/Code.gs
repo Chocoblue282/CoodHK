@@ -110,6 +110,7 @@ function doPost(e) {
     };
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
     sheet.appendRow(headers.map(function (header) { return record[header] == null ? '' : record[header]; }));
+    SpreadsheetApp.flush();
     notifyAdmin_(record);
     return json_({ ok: true, id: record.id, photo_url: record.photo_url, status: record.status });
   } catch (err) {
@@ -164,6 +165,7 @@ function updateStatus_(id, status) {
   sheet.getRange(record._row, statusColumn).setValue(normalized);
   if (reviewedAtColumn) sheet.getRange(record._row, reviewedAtColumn).setValue(new Date().toISOString());
   if (reviewedByColumn) sheet.getRange(record._row, reviewedByColumn).setValue(Session.getActiveUser().getEmail() || 'admin');
+  SpreadsheetApp.flush();
   return { ok: true, id: id, status: normalized };
 }
 

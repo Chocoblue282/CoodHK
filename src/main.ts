@@ -46,6 +46,8 @@ let detailOpen = false;
 let leafletMap: L.Map | null = null;
 let pendingPhotoBase64 = '';
 let pendingPhotoName = '';
+let approvedSignature = '';
+let syncInFlight = false;
 
 function resolveCoordinates(restaurant: Restaurant): [number, number] {
   const hasOverride = typeof restaurant.latOverride === 'number' && typeof restaurant.lngOverride === 'number';
@@ -92,19 +94,28 @@ function remoteRestaurant(row: Record<string, unknown>): Restaurant {
   };
 }
 
-async function syncApprovedRestaurants() {
+async function syncApprovedRestaurants(silent = false) {
   if (!GAS_ENABLED) return;
+  if (syncInFlight) return;
+  syncInFlight = true;
   try {
     const response = await fetch(`${GAS_ENDPOINT}?action=listApproved&t=${Date.now()}`);
     if (!response.ok) throw new Error(`GAS GET ${response.status}`);
     const payload = await response.json() as { ok?: boolean; restaurants?: Record<string, unknown>[]; error?: string };
     if (!payload.ok || !Array.isArray(payload.restaurants)) throw new Error(payload.error || 'GAS returned an invalid response.');
-    allRestaurants = payload.restaurants.filter((row) => String(row.status).toLowerCase() === 'approved').map(remoteRestaurant);
-    updateFilterOptions();
-    renderApp();
+    const approvedRows = payload.restaurants.filter((row) => String(row.status).toLowerCase() === 'approved');
+    const nextSignature = JSON.stringify(approvedRows.map((row) => [row.id, row.status, row.photo_url, row.reviewed_at]));
+    if (nextSignature !== approvedSignature) {
+      allRestaurants = approvedRows.map(remoteRestaurant);
+      approvedSignature = nextSignature;
+      updateFilterOptions();
+      renderApp();
+    }
   } catch (error) {
     console.warn('[CoodHK] Google Sheets sync failed; retaining local approved data.', error);
-    showToast('暫時未能同步試算表，先顯示本地已核准資料。');
+    if (!silent) showToast('暫時未能同步試算表，先顯示本地已核准資料。');
+  } finally {
+    syncInFlight = false;
   }
 }
 
@@ -411,3 +422,9 @@ function bindEvents() {
 
 renderApp();
 void syncApprovedRestaurants();
+window.setInterval(() => {
+  if (!document.hidden) void syncApprovedRestaurants(true);
+}, 30000);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) void syncApprovedRestaurants(true);
+});

@@ -49,7 +49,7 @@ POST                        接收 Base64 壓縮圖片、上傳 Drive、寫入 p
 https://script.google.com/macros/s/DEPLOYMENT_ID/exec?action=admin&token=你的_ADMIN_TOKEN
 ```
 
-頁面會列出所有 `pending` 報料，並提供「批准上線」及「拒絕」按鈕。批准後會將 Sheet 的 `status` 改為 `approved`，網站下一次同步時才會顯示該餐廳；拒絕則改為 `rejected`，保持隱藏。
+頁面會列出所有 `pending` 報料，並提供「批准上線」及「拒絕」按鈕。批准後會將 Sheet 的 `status` 原子地改為 `approved`，並呼叫 `SpreadsheetApp.flush()` 確保寫入完成；網站的前端會在啟動時讀取，之後每 30 秒輪詢一次，並在瀏覽器重新回到前景時立即重新讀取。下一次同步即可顯示該餐廳；拒絕則改為 `rejected`，保持隱藏。
 
 審核頁使用 `ADMIN_TOKEN` 保護。請不要把完整審核網址公開分享；若懷疑 token 洩漏，請在 Script Properties 更換 token 後重新部署／使用新網址。
 
